@@ -22,6 +22,10 @@ class TaskController extends Controller
             'tasks' => $tasks,
         ]);
     }
+    public function create()
+    {
+        //
+    }
 
     public function store(Request $request)
     {
@@ -35,5 +39,10 @@ class TaskController extends Controller
         ]);
 
         return redirect('/tasks');
+    }
+
+    public function destroy(Request $request, Task $task)
+    {
+        //
     }
 }
