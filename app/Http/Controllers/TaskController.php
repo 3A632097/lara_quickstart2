@@ -1,11 +1,19 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Requests;
+use App\Task;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class TaskController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -17,7 +25,6 @@ class TaskController extends Controller
 
         //顯示已有的任務
         $tasks = Task::where('user_id', $request->user()->id)->get();
-
         /*認證->使用者->任務*/                  // auth()->user()代表登入者的User model
         //$tasks= auth()->user()->tasks;
         /*認證->使用者->任務->get*/
@@ -39,11 +46,23 @@ class TaskController extends Controller
             'tasks' => $tasks,
         ]);
     }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
         //
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -58,27 +77,50 @@ class TaskController extends Controller
         return redirect('/tasks');
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Task  $task
+     * @return \Illuminate\Http\Response
+     */
     public function show(Task $task)
     {
         //
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Task  $task
+     * @return \Illuminate\Http\Response
+     */
     public function edit(Task $task)
     {
         //
     }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Task  $task
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request, Task $task)
     {
         //
     }
 
-    public function destroy(Request $request, Task $task)
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Task  $task
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request,Task $task)
     {
         $this->authorize('destroy', $task);
-
         $task->delete();
-
         return redirect('/tasks');
     }
 }
